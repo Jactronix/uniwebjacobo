@@ -1,0 +1,21 @@
+{% extends "estudiantes/base.html" %}
+{% block title %}Inicio — uniwebjacobo{% endblock %}
+
+{% block content %}
+<h1>Home Estudiantes</h1>
+<p>Asignatura: Programacion Integrada Web — Andres Alfonso Murgas Viloria</p>
+
+<p>
+  Aplicacion web desarrollada con Django que permite registrar estudiantes y productos,
+  visualizar los listados y eliminar entradas desde la base de datos.
+</p>
+
+<h2>Secciones</h2>
+<ul style="font-size: 14px; line-height: 2.2;">
+  <li><a href="/registro/">Registro de Estudiante</a> — Registrar un nuevo estudiante</li>
+  <li><a href="/lista/">Lista de Estudiantes</a> — Ver los estudiantes registrados ({{ total_estudiantes }} actualmente)</li>
+  <li><a href="/productos/registro/">Registrar Producto</a> — Registrar un nuevo producto</li>
+  <li><a href="/productos/">Lista de Productos</a> — Ver los productos registrados</li>
+  <li><a href="/acerca/">Acerca</a> — Informacion del proyecto</li>
+</ul>
+{% endblock %}

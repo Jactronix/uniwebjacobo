@@ -1,0 +1,45 @@
+{% extends "estudiantes/base.html" %}
+{% block title %}Lista de Productos — uniwebjacobo{% endblock %}
+
+{% block content %}
+<h1>Lista de Productos</h1>
+<p>Total de productos registrados: <strong>{{ productos.count }}</strong></p>
+
+<div style="margin-bottom: 14px;">
+  <a href="/productos/registro/" class="btn">Registrar nuevo producto</a>
+</div>
+
+{% if productos %}
+<!-- productos viene del contexto pasado por lista_productos() en views.py -->
+<!-- Producto.objects.all() consulta todos los registros de la tabla en SQLite -->
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Nombre</th>
+      <th>Precio</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for producto in productos %}
+    <tr>
+      <td>{{ forloop.counter }}</td>
+      <td>{{ producto.nombre }}</td>
+      <td>${{ producto.precio }}</td>
+      <td>
+        <!-- UPDATE: enlace a la vista editar_producto con el id del registro -->
+        <a href="/productos/editar/{{ producto.id }}/" class="btn">Editar</a>
+        <!-- DELETE: enlace a la vista eliminar_producto con el id del registro -->
+        <a href="/productos/eliminar/{{ producto.id }}/"
+           class="btn btn-eliminar"
+           onclick="return confirm('¿Eliminar {{ producto.nombre }}?')">Eliminar</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="vacio">No hay productos registrados. <a href="/productos/registro/">Registrar el primero</a></p>
+{% endif %}
+{% endblock %}

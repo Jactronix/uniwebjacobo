@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>{% block title %}uniwebjacobo{% endblock %}</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      color: #333;
+      min-height: 100vh;
+    }
+
+    nav {
+      background-color: #2c3e7a;
+      padding: 12px 24px;
+      display: flex;
+      gap: 6px;
+    }
+
+    nav a {
+      color: #ccd6f6;
+      text-decoration: none;
+      font-size: 14px;
+      padding: 6px 14px;
+      border-radius: 4px;
+    }
+
+    nav a:hover { background: rgba(255,255,255,0.15); color: white; }
+    nav a.activo { background: rgba(255,255,255,0.2); color: white; font-weight: bold; }
+
+    .contenido {
+      max-width: 960px;
+      margin: 30px auto;
+      padding: 0 24px;
+    }
+
+    h1 { font-size: 1.4rem; color: #2c3e7a; margin-bottom: 6px; }
+    h2 { font-size: 1rem; color: #333; margin: 18px 0 8px 0; }
+    p { font-size: 14px; color: #555; margin-bottom: 10px; line-height: 1.6; }
+
+    .aviso-error {
+      background: #fdecea;
+      border-left: 4px solid #e74c3c;
+      color: #c0392b;
+      padding: 8px 14px;
+      font-size: 13px;
+      margin-bottom: 14px;
+    }
+
+    .aviso-exito {
+      background: #eafaf1;
+      border-left: 4px solid #27ae60;
+      color: #1e8449;
+      padding: 8px 14px;
+      font-size: 13px;
+      margin-bottom: 14px;
+    }
+
+    .campo { margin-bottom: 14px; }
+
+    .campo label {
+      display: block;
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+
+    .campo input {
+      padding: 7px 10px;
+      border: 1px solid #bbb;
+      border-radius: 4px;
+      font-size: 14px;
+      width: 280px;
+    }
+
+    .campo input:focus { border-color: #2c3e7a; outline: none; }
+    .campo input.campo-error { border-color: #e74c3c; }
+
+    .texto-error {
+      color: #e74c3c;
+      font-size: 12px;
+      margin-top: 3px;
+      display: none;
+    }
+
+    button, .btn {
+      padding: 7px 16px;
+      font-size: 13px;
+      cursor: pointer;
+      border: 1px solid #aaa;
+      background: #f0f0f0;
+      border-radius: 4px;
+      text-decoration: none;
+      color: #333;
+      display: inline-block;
+    }
+
+    button:hover, .btn:hover { background: #e0e0e0; }
+
+    .btn-peligro { background: #fdecea; border-color: #e74c3c; color: #c0392b; }
+    .btn-peligro:hover { background: #e74c3c; color: white; }
+
+    .btn-eliminar {
+      background: #fdecea;
+      border-color: #e74c3c;
+      color: #c0392b;
+      font-size: 12px;
+      padding: 4px 10px;
+    }
+    .btn-eliminar:hover { background: #e74c3c; color: white; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14px; max-width: 700px; margin-top: 10px; }
+    th { background: #2c3e7a; color: white; padding: 9px 12px; text-align: left; font-size: 13px; }
+    td { padding: 9px 12px; border-bottom: 1px solid #ddd; }
+    tr:hover td { background: #f7f7f7; }
+
+    .vacio { color: #999; font-size: 14px; margin-top: 10px; }
+    .vacio a { color: #2c3e7a; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/"                    {% if request.resolver_match.url_name == 'home'               %}class="activo"{% endif %}>Inicio</a>
+  <a href="/registro/"           {% if request.resolver_match.url_name == 'registro'           %}class="activo"{% endif %}>Registro</a>
+  <a href="/lista/"              {% if request.resolver_match.url_name == 'lista'              %}class="activo"{% endif %}>Lista</a>
+  <a href="/productos/registro/" {% if request.resolver_match.url_name == 'registrar_producto' %}class="activo"{% endif %}>Registrar Producto</a>
+  <a href="/productos/"          {% if request.resolver_match.url_name == 'lista_productos'    %}class="activo"{% endif %}>Productos</a>
+  <a href="/acerca/"             {% if request.resolver_match.url_name == 'acerca'             %}class="activo"{% endif %}>Acerca</a>
+</nav>
+
+<div class="contenido">
+  {% block content %}{% endblock %}
+</div>
+
+</body>
+</html>

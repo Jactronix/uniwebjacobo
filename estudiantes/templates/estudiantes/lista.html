@@ -1,0 +1,50 @@
+{% extends "estudiantes/base.html" %}
+{% block title %}Lista de Estudiantes — uniwebjacobo{% endblock %}
+
+{% block content %}
+<h1>Lista de Estudiantes</h1>
+<p>Total de estudiantes registrados: <strong>{{ total }}</strong></p>
+
+<div style="margin-bottom: 14px; display: flex; gap: 10px;">
+  <a href="/registro/" class="btn">Registrar nuevo</a>
+  {% if total > 0 %}
+  <a href="/lista/limpiar/" class="btn btn-peligro"
+     onclick="return confirm('Esta accion eliminara todos los estudiantes. Desea continuar?');">
+    Borrar toda la lista
+  </a>
+  {% endif %}
+</div>
+
+{% if total > 0 %}
+<!-- Tabla generada con la sintaxis de Django Templates -->
+<!-- estudiantes viene del contexto pasado por la vista lista() en views.py -->
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Nombre</th>
+      <th>Edad</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for estudiante in estudiantes %}
+    <tr>
+      <td>{{ forloop.counter }}</td>
+      <td>{{ estudiante.nombre }}</td>
+      <td>{{ estudiante.edad }}</td>
+      <td>
+        <a href="/eliminar/{{ estudiante.id }}/"
+           class="btn btn-eliminar"
+           onclick="return confirm('Desea eliminar a {{ estudiante.nombre }}?');">
+          Eliminar
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="vacio">No hay estudiantes registrados. <a href="/registro/">Registrar el primero</a></p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "estudiantes/base.html" %}
+{% block title %}Editar Producto — uniwebjacobo{% endblock %}
+
+{% block content %}
+<h1>Editar Producto</h1>
+<p>Modifica los datos del producto y guarda los cambios.</p>
+
+{% if error %}
+<div class="aviso-error">{{ error }}</div>
+{% endif %}
+
+<!-- Formulario POST — los datos se envian a /productos/editar/<id>/ -->
+<!-- La vista editar_producto() en views.py actualiza con producto.save() (ORM UPDATE) -->
+<form method="POST" action="/productos/editar/{{ producto.id }}/">
+  {% csrf_token %}
+
+  <div class="campo">
+    <label for="nombre">Nombre del producto</label>
+    <input type="text" id="nombre" name="nombre"
+           value="{{ producto.nombre }}" required />
+  </div>
+
+  <div class="campo">
+    <label for="precio">Precio</label>
+    <input type="number" id="precio" name="precio"
+           value="{{ producto.precio }}" step="0.01" min="0" required />
+  </div>
+
+  <button type="submit">Guardar cambios</button>
+  <a href="/productos/" class="btn" style="margin-left: 8px;">Cancelar</a>
+</form>
+{% endblock %}

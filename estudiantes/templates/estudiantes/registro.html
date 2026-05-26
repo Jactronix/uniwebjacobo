@@ -1,0 +1,110 @@
+{% extends "estudiantes/base.html" %}
+{% block title %}Registro — uniwebjacobo{% endblock %}
+
+{% block content %}
+<h1>Registro de Estudiante</h1>
+<p>Complete el formulario para registrar un nuevo estudiante en la base de datos.</p>
+
+{% if error %}
+<div class="aviso-error">{{ error }}</div>
+{% endif %}
+
+{% if success %}
+<div class="aviso-exito">{{ success }}</div>
+{% endif %}
+
+<!-- Formulario POST — los datos se envian a /guardar/ -->
+<!-- {% csrf_token %} es requerido por Django para proteccion CSRF -->
+<form id="formRegistro" method="POST" action="/guardar/" novalidate>
+  {% csrf_token %}
+
+  <div class="campo">
+    <label for="nombre">Nombre</label>
+    <input type="text" id="nombre" name="nombre" placeholder="Solo letras y espacios" autocomplete="off" />
+    <div class="texto-error" id="error-nombre"></div>
+  </div>
+
+  <div class="campo">
+    <label for="edad">Edad</label>
+    <input type="text" id="edad" name="edad" placeholder="Solo numeros enteros" maxlength="3" autocomplete="off" />
+    <div class="texto-error" id="error-edad"></div>
+  </div>
+
+  <button type="submit">Guardar</button>
+  <a href="/lista/" class="btn" style="margin-left: 8px;">Ver lista</a>
+</form>
+
+<h2>Reglas de validacion</h2>
+<p>
+  <strong>Nombre:</strong> obligatorio, solo letras y espacios, sin numeros ni caracteres especiales.<br>
+  <strong>Edad:</strong> obligatorio, solo numeros enteros positivos, sin letras ni caracteres especiales.
+</p>
+
+<!-- Validacion en el cliente (JavaScript) -->
+<!-- La validacion en el servidor se realiza en views.py (guardar_estudiante) -->
+<script>
+  var form        = document.getElementById("formRegistro");
+  var inputNombre = document.getElementById("nombre");
+  var inputEdad   = document.getElementById("edad");
+  var regexNombre = /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/;
+
+  function mostrarError(input, idError, mensaje) {
+    input.classList.add("campo-error");
+    var el = document.getElementById(idError);
+    el.innerText = mensaje;
+    el.style.display = "block";
+  }
+
+  function limpiarError(input, idError) {
+    input.classList.remove("campo-error");
+    var el = document.getElementById(idError);
+    el.innerText = "";
+    el.style.display = "none";
+  }
+
+  // Validacion en tiempo real al escribir en el campo nombre
+  inputNombre.addEventListener("input", function() {
+    var val = inputNombre.value.trim();
+    if (val !== "" && !regexNombre.test(val)) {
+      mostrarError(inputNombre, "error-nombre", "El nombre solo puede contener letras y espacios.");
+    } else {
+      limpiarError(inputNombre, "error-nombre");
+    }
+  });
+
+  // Bloquea caracteres no numericos en el campo edad
+  inputEdad.addEventListener("input", function() {
+    inputEdad.value = inputEdad.value.replace(/[^0-9]/g, "");
+    limpiarError(inputEdad, "error-edad");
+  });
+
+  // Validacion al intentar enviar el formulario
+  form.addEventListener("submit", function(e) {
+    var valido = true;
+    var nombre = inputNombre.value.trim();
+    var edad   = inputEdad.value.trim();
+
+    if (nombre === "") {
+      mostrarError(inputNombre, "error-nombre", "El nombre es obligatorio.");
+      valido = false;
+    } else if (!regexNombre.test(nombre)) {
+      mostrarError(inputNombre, "error-nombre", "El nombre solo puede contener letras y espacios.");
+      valido = false;
+    } else {
+      limpiarError(inputNombre, "error-nombre");
+    }
+
+    if (edad === "") {
+      mostrarError(inputEdad, "error-edad", "La edad es obligatoria.");
+      valido = false;
+    } else if (parseInt(edad) <= 0) {
+      mostrarError(inputEdad, "error-edad", "La edad debe ser mayor que cero.");
+      valido = false;
+    } else {
+      limpiarError(inputEdad, "error-edad");
+    }
+
+    if (!valido) { e.preventDefault(); }
+  });
+</script>
+{% endblock %}

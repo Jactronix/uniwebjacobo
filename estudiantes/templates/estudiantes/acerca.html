@@ -1,0 +1,46 @@
+{% extends "estudiantes/base.html" %}
+{% block title %}Acerca — uniwebjacobo{% endblock %}
+
+{% block content %}
+<h1>Acerca del Proyecto</h1>
+
+<h2>Que es</h2>
+<p>
+  uniwebjacobo es una aplicacion web que permite gestionar el registro de estudiantes
+  y productos. Permite ingresar datos, consultarlos en una lista y eliminar entradas
+  de forma individual o en su totalidad.
+</p>
+
+<h2>Como se esta desarrollando</h2>
+<p>
+  El proyecto se desarrolla utilizando el framework <strong>Django</strong> con Python
+  como lenguaje del servidor. Las vistas se construyen con plantillas HTML propias de Django,
+  la validacion de datos se realiza tanto en el cliente mediante JavaScript como en el
+  servidor mediante Python, y los datos se almacenan en una base de datos SQLite local
+  mediante el ORM de Django.
+</p>
+
+<h2>Informacion general</h2>
+<p>
+  <strong>Proyecto:</strong> uniwebjacobo<br>
+  <strong>Desarrollado por:</strong> Jacobo Leal Bustamante<br>
+  <strong>Asignatura:</strong> Programacion Integrada Web<br>
+  <strong>Docente:</strong> Andres Alfonso Murgas Viloria
+</p>
+
+<h2>Vistas implementadas</h2>
+<table>
+  <thead>
+    <tr><th>Vista</th><th>URL</th><th>Descripcion</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>home</td><td>/</td><td>Pagina de inicio con accesos directos a las secciones</td></tr>
+    <tr><td>registro</td><td>/registro/</td><td>Formulario de registro de estudiante con validacion</td></tr>
+    <tr><td>lista</td><td>/lista/</td><td>Tabla de estudiantes con opcion de eliminar</td></tr>
+    <tr><td>registrar_producto</td><td>/productos/registro/</td><td>Formulario de registro de producto</td></tr>
+    <tr><td>lista_productos</td><td>/productos/</td><td>Tabla de productos registrados en la BD</td></tr>
+    <tr><td>acerca</td><td>/acerca/</td><td>Informacion general del proyecto</td></tr>
+    <tr><td>saludo</td><td>/saludo/</td><td>Endpoint basico de demostracion cliente-servidor</td></tr>
+  </tbody>
+</table>
+{% endblock %}
